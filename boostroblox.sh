@@ -138,41 +138,48 @@ if [ "$mode" = "1" ]; then
     echo "3. Jalankan skrip ini ulang setiap kali reboot."
     echo "====================================================="
 
-elif [ "$mode" = "2" ]; then
+elif [ "$mode" == "2" ]; then
     echo
     echo "→ Mengembalikan semua ke pengaturan default..."
     sleep 1
 
-    settings put global window_animation_scale 1 >/dev/null 2>&1
-    settings put global transition_animation_scale 1 >/dev/null 2>&1
-    settings put global animator_duration_scale 1 >/dev/null 2>&1
-    settings put global background_process_limit -1 >/dev/null 2>&1
-    settings delete system activity_manager_constants >/dev/null 2>&1
-    settings delete global disable_hw_overlays >/dev/null 2>&1
-    settings delete global debug_hwui_profile >/dev/null 2>&1
-    settings delete global debug_hwui_force_dark >/dev/null 2>&1
-    settings delete global enable_gpu_debug_layers >/dev/null 2>&1
-    settings delete global opengl_triple_buffering >/dev/null 2>&1
-    settings delete global sched_boost >/dev/null 2>&1
-    settings delete global cpu_min_freq_policy >/dev/null 2>&1
-    settings delete global input_event_timeout >/dev/null 2>&1
-    settings delete global input_boost_duration >/dev/null 2>&1
-    settings delete global touch_blocking_duration >/dev/null 2>&1
-    settings delete system pointer_speed >/dev/null 2>&1
-    settings delete system long_press_timeout >/dev/null 2>&1
-    settings delete system tap_duration_threshold >/dev/null 2>&1
-    settings delete global debug.hwui.disable_vsync >/dev/null 2>&1
-    settings delete global debug.hwui.render_dirty_regions >/dev/null 2>&1
-    settings delete global debug.composition.type >/dev/null 2>&1
-    cmd thermalservice reset >/dev/null 2>&1
-    cmd power set-fixed-performance-mode-enabled false >/dev/null 2>&1
-    cmd power set-adaptive-power-saver-enabled true >/dev/null 2>&1
-    cmd deviceidle enable >/dev/null 2>&1
+    # -------------------------------------------------
+    # RESTORE DEFAULT SETTINGS (Safe, Non-blocking)
+    # -------------------------------------------------
+    {
+        settings put global window_animation_scale 1
+        settings put global transition_animation_scale 1
+        settings put global animator_duration_scale 1
+        settings put global background_process_limit -1
+        settings delete system activity_manager_constants
+        settings delete global disable_hw_overlays
+        settings delete global debug_hwui_profile
+        settings delete global debug_hwui_force_dark
+        settings delete global enable_gpu_debug_layers
+        settings delete global opengl_triple_buffering
+        settings delete global sched_boost
+        settings delete global cpu_min_freq_policy
+        settings delete global input_event_timeout
+        settings delete global input_boost_duration
+        settings delete global touch_blocking_duration
+        settings delete system pointer_speed
+        settings delete system long_press_timeout
+        settings delete system tap_duration_threshold
+        settings delete global debug.hwui.disable_vsync
+        settings delete global debug.hwui.render_dirty_regions
+        settings delete global debug.composition.type
+
+        timeout 2 cmd thermalservice reset >/dev/null 2>&1 &
+        timeout 2 cmd power set-fixed-performance-mode-enabled false >/dev/null 2>&1 &
+        timeout 2 cmd power set-adaptive-power-saver-enabled true >/dev/null 2>&1 &
+        timeout 2 cmd deviceidle enable >/dev/null 2>&1 &
+    } >/dev/null 2>&1
 
     echo
     echo "====================================================="
     echo "♻️  RESTORE COMPLETE – Semua pengaturan dikembalikan."
     echo "====================================================="
-else
-    echo "❌ Pilihan tidak valid!"
+    echo
+    echo "🔁 Tekan ENTER untuk kembali ke shell..."
+    read
 fi
