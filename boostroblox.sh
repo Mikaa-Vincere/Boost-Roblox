@@ -11,11 +11,11 @@ REPO_URL="https://raw.githubusercontent.com/Mikaa-Vincere/Boost-Roblox/refs/head
 # 🔄 AUTO UPDATE SYSTEM
 # =====================================================
 echo "🔄 Mengecek update terbaru dari GitHub..."
-curl -fsSL "$REPO_URL" -o /tmp/roblox_booster.sh
+curl -fsSL "$REPO_URL" -o /tmp/boostroblox.sh
 
-if [ -s /tmp/roblox_booster.sh ]; then
+if [ -s /tmp/boostroblox.sh ]; then
     echo "✅ Script terbaru ditemukan, menjalankan update..."
-    bash /tmp/roblox_booster.sh
+    bash /tmp/boostroblox.sh
     exit 0
 else
     echo "⚠️ Tidak dapat mengunduh update, menggunakan versi lokal..."
