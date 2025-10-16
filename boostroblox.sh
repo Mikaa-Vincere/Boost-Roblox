@@ -5,7 +5,7 @@
 # MAX FPS • NO FRAME DROP • SUPER RESPONSIVE
 # =====================================================
 
-REPO_URL="https://raw.githubusercontent.com/username/roblox-booster/main/roblox_booster.sh"
+REPO_URL="https://raw.githubusercontent.com/Mikaa-Vincere/Boost-Roblox/refs/heads/main/boostroblox.sh"
 
 # =====================================================
 # 🔄 AUTO UPDATE SYSTEM
